@@ -1,0 +1,10 @@
+[package]
+name = "dpf_bindings"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dpf = { path = "../../" }
+
+[build-dependencies]
+cc = "1.0"

@@ -1,0 +1,11 @@
+[package]
+name = "dpf"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "dpf"
+path = "lib.rs"
+
+[dependencies]
+# No external dependencies needed since we're using C bindings 

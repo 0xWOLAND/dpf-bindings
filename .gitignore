@@ -1,0 +1,4 @@
+# Bazel generated symlinks
+bazel-*
+
+target/
