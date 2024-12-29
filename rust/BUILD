@@ -4,7 +4,7 @@ rust_library(
     name = "dpf",
     srcs = ["lib.rs"],
     deps = [
-        "//dpf:wrapper",  # C++ wrapper library
+        "//dpf:wrapper",  
     ],
     rustc_flags = [
         "-C", "link-arg=-Wl,-force_load,$(location //dpf:wrapper)",
@@ -17,7 +17,7 @@ rust_test(
     name = "dpf_test",
     crate = ":dpf",
     deps = [
-        "//dpf:wrapper",  # Need to include the wrapper in test deps as well
+        "//dpf:wrapper", 
     ],
     rustc_flags = [
         "-C", "link-arg=-Wl,-force_load,$(location //dpf:wrapper)",

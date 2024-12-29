@@ -1,10 +1,27 @@
-# An Implementation of Incremental Distributed Point Functions in C++ [![Build status](https://badge.buildkite.com/64bb7c0fcc8c11d630517356b2c3932d7e14850801a5f22c48.svg?branch=master)](https://buildkite.com/bazel/google-distributed-point-functions)
+# An Implementation of Incremental Distributed Point Functions in C++ with Rust Bindings [![Build status](https://badge.buildkite.com/64bb7c0fcc8c11d630517356b2c3932d7e14850801a5f22c48.svg?branch=master)](https://buildkite.com/bazel/google-distributed-point-functions)
 
 This library contains an implementation of incremental distributed point
 functions, based on the following paper:
 > Boneh, D., Boyle, E., Corrigan-Gibbs, H., Gilboa, N., & Ishai, Y. (2020).
 Lightweight Techniques for Private Heavy Hitters. arXiv preprint
 > arXiv:2012.14884. https://arxiv.org/abs/2012.14884
+
+## Project Structure
+
+```
+.
+├── MODULE.bazel         # Bazel module configuration (Bzlmod)
+├── WORKSPACE.bzlmod     # Bazel workspace configuration
+├── Cargo.toml          # Rust crate manifest
+├── dpf/                # Core C++ implementation
+│   ├── BUILD           # Bazel build file for C++ library
+│   ├── distributed_point_function.h
+│   └── distributed_point_function.cc
+├── rust/               # Rust bindings
+│   ├── BUILD          # Bazel build file for Rust library
+│   └── lib.rs         # Rust bindings implementation
+└── examples/          # Usage examples
+```
 
 ## About Incremental Distributed Point Functions
 
@@ -25,18 +42,67 @@ the `i`-th hierarchy level, the incremental DPF returns a secret share of
 For more details, see the above paper, as well as the
 [`DistributedPointFunction` class documentation](dpf/distributed_point_function.h).
 
+## Building the Project
 
-## Building/Running Tests
+This project uses both Bazel and Cargo for building. The core C++ implementation is wrapped with a C++ wrapper layer, which is then exposed to Rust through bindings.
 
-This repository requires Bazel. You can install Bazel by
-following the instructions for your platform on the
-[Bazel website](https://docs.bazel.build/versions/master/install.html).
+### Prerequisites
 
-Once you have installed Bazel you can clone this repository and run all tests
-that are included by navigating into the root folder and running:
+- Bazel (latest version with Bzlmod support)
+- Rust toolchain
+- C++ compiler
+
+### Building with Bazel
+
+The build process involves three main components:
+1. The core C++ DPF implementation
+2. The C++ wrapper layer
+3. The Rust bindings
+
+To build everything:
+```bash
+bazel build //...
+```
+
+To build components individually:
+```bash
+# First build the core C++ implementation
+bazel build //dpf:distributed_point_function
+
+# Then build the C++ wrapper
+bazel build //dpf:wrapper
+
+# Finally build the Rust bindings
+bazel build //rust:dpf
+```
+
+### Building with Cargo
+
+When building with Cargo, you'll still need Bazel installed as the build process needs to compile the C++ components. The Cargo build will automatically handle building the C++ wrapper and linking it with the Rust bindings:
 
 ```bash
+cargo build
+```
+
+## Running Tests
+
+To run all tests:
+```bash
 bazel test //...
+```
+
+To test individual components:
+```bash
+# Test the C++ implementation
+bazel test //dpf:distributed_point_function_test
+
+# Test the wrapper
+bazel test //dpf:wrapper_test
+
+# Test the Rust bindings
+bazel test //rust:dpf_test
+# or with Cargo
+cargo test
 ```
 
 ## Security
