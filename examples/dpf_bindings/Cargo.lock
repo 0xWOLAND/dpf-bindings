@@ -14,12 +14,14 @@ dependencies = [
 [[package]]
 name = "dpf"
 version = "0.1.0"
+dependencies = [
+ "cc",
+]
 
 [[package]]
 name = "dpf_bindings"
 version = "0.1.0"
 dependencies = [
- "cc",
  "dpf",
 ]
 

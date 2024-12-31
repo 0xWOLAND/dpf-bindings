@@ -239,6 +239,7 @@ cc_library(
     srcs = ["wrapper.cc"],
     hdrs = ["wrapper.h"],
     testonly = True,
+    linkstatic = True,
     deps = [
         ":distributed_point_function",
         "//pir:dense_dpf_pir_client",

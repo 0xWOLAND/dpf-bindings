@@ -10,3 +10,6 @@ name = "dpf"
 path = "rust/lib.rs"
 
 [dependencies] 
+
+[build-dependencies]
+cc = "1.0"
